@@ -1,89 +1,93 @@
-# HanziFlow Web
+# 🏮 HanziFlow Web
 
-Identična web verzija HanziFlow desktop aplikacije.
+A comprehensive full-stack web application for learning Chinese, featuring AI-powered tools, gamified progression, and spaced repetition systems.
 
-## Tech Stack
-- **Frontend**: Next.js 14 + TypeScript + Tailwind CSS + Framer Motion
-- **Backend**: FastAPI (Python) 
-- **Database**: Supabase (PostgreSQL)
-- **AI**: OpenRouter (Gemini 3 Flash Preview)
-- **TTS**: gTTS + Gemini TTS
+---
 
-## Setup
+## 🚀 Tech Stack
 
-### 1. Supabase
-1. Napravi projekat na [supabase.com](https://supabase.com)
-2. Idi u SQL Editor i pokreni `backend/supabase/schema.sql`
-3. Uzmi `Project URL` i `service_role key`
+- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS, Framer Motion.
+- **Backend**: FastAPI (Python 3.13), Uvicorn, Pydantic.
+- **Database**: Supabase (PostgreSQL) with RLS.
+- **AI Integration**: OpenRouter (Gemini 3 Flash), Google Gemini API.
+- **State Management**: Zustand.
+- **Speech/Audio**: gTTS & Gemini-powered TTS.
 
-### 2. Backend (FastAPI)
+---
+
+## ✨ Key Features
+
+- **🔐 Secure Auth**: Custom JWT-based authentication with salted password hashing.
+- **📊 Interactive Dashboard**: Real-time XP tracking, daily goals, and an AI Language Coach.
+- **🧠 Smart Quiz**: Vocabulary retention powered by the **SM2 Spaced Repetition** algorithm.
+- **✍️ AI Writing**: Real-time stroke and translation validation using LLMs.
+- **🎮 Language Arena**: Competitive word games and sentence builders with drag-and-drop.
+- **🗣️ Speaking Evaluation**: AI-driven pronunciation feedback and speaking exercises.
+- **🏆 Gamification**: Global/Weekly leaderboards, achievement system, and streak protection.
+- **🌑 Modern UI**: Fully responsive design with native Dark Mode support.
+
+---
+
+## 🛠 Setup & Installation
+
+### 1. Database Setup
+1. Create a project at [supabase.com](https://supabase.com).
+2. Execute the schema found in `backend/supabase/schema.sql` using the Supabase SQL Editor.
+3. Obtain your `Project URL` and `service_role` key.
+
+### 2. Backend Configuration
 ```bash
 cd backend
 python -m venv venv
-venv\Scripts\activate        # Windows
-# source venv/bin/activate   # Mac/Linux
+
+# Activate venv:
+# Windows:
+venv\Scripts\activate
+# Mac/Linux:
+# source venv/bin/activate
+
 pip install -r requirements.txt
 cp .env.example .env
-# Popuni .env sa tvojim ključevima
+# Fill in your credentials in .env
 uvicorn main:app --reload --port 8000
-```
-
-### 3. Frontend (Next.js)
-```bash
+3. Frontend Configuration
+Bash
 cd frontend
 npm install
 cp .env.local.example .env.local
-# Popuni .env.local
+# Set NEXT_PUBLIC_API_URL to http://localhost:8000
 npm run dev
-```
-
-App se otvara na: **http://localhost:3000**
-
-## Deploy
-
-### Backend → Railway
-1. [railway.app](https://railway.app) → New Project → Deploy from GitHub
-2. Dodaj environment variables
-3. Start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
-
-### Frontend → Vercel
-1. [vercel.com](https://vercel.com) → Import Git Repository
-2. Set `NEXT_PUBLIC_API_URL` na Railway URL
-3. Deploy
-
-## Struktura
-```
+📂 Project Structure
+Plaintext
 hanziflow-web/
 ├── frontend/
 │   ├── src/
-│   │   ├── app/           # Next.js pages (auth, dashboard, quiz, writing...)
-│   │   ├── components/    # Reusable components
-│   │   ├── lib/           # API client
-│   │   ├── stores/        # Zustand state
-│   │   └── types/         # TypeScript types
+│   │   ├── app/            # Pages (auth, dashboard, quiz, arena)
+│   │   ├── components/     # UI & Logic components
+│   │   ├── lib/            # API clients (Axios)
+│   │   └── stores/         # Zustand global state
 │   └── package.json
-│
 └── backend/
-    ├── main.py            # FastAPI app
-    ├── routers/           # auth, quiz, writing, grammar, speaking, arena...
-    ├── core/              # DB, settings
-    ├── supabase/          # SQL schema
+    ├── main.py             # FastAPI entry point
+    ├── routers/            # Auth, Vocab, Quiz, AI modules
+    ├── core/               # Security & DB settings
     └── requirements.txt
-```
+🚢 Deployment
+Backend (Railway)
+Link your GitHub repo to Railway.app.
 
-## Features implementovane
-- ✅ Auth (login/register)
-- ✅ Dashboard sa stats, XP chart, AI Coach
-- ✅ Writing mode sa AI provjером prijevoda
-- ✅ Sentence Builder sa dnd-kit drag&drop
-- ✅ Quiz sa SM2 spaced repetition algoritmom
-- ✅ Grammar sentence generation
-- ✅ Speaking AI evaluacija (Gemini)
-- ✅ Arena word game
-- ✅ Leaderboard (global + weekly)
-- ✅ TTS audio (gTTS + Gemini)
-- ✅ Vocabulary management + AI extract
-- ✅ Mistakes review
-- ✅ Achievements system
-- ✅ Streak tracking sa shields
-- ✅ Dark mode
+Add environment variables (copied from .env).
+
+Set start command: uvicorn main:app --host 0.0.0.0 --port $PORT
+
+Frontend (Vercel)
+Import the repository to Vercel.
+
+Set NEXT_PUBLIC_API_URL to your production Railway URL.
+
+Deploy.
+
+📝 License
+Distributed under the MIT License.
+
+Developed with ❤️ by Josh
