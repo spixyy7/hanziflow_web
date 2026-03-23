@@ -2,7 +2,9 @@
 import axios from 'axios'
 import { useStore } from '@/stores/useStore'
 
-const BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+const BASE = typeof window !== 'undefined' && window.location.hostname === 'localhost'
+  ? 'http://localhost:8000' // Ako si na svom kompjuteru
+  : '/api';                // Ako si na Vercelu (koristi Rewrite)
 
 export const api = axios.create({ baseURL: BASE })
 
