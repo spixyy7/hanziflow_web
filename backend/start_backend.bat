@@ -2,27 +2,23 @@
 echo HanziFlow Backend Setup
 echo =======================
 
-REM Create venv outside OneDrive to avoid sync issues
 set VENV_PATH=C:\hanziflow_venv
 
-echo Creating virtual environment at %VENV_PATH%...
-python -m venv %VENV_PATH%
-
-if errorlevel 1 (
-    echo ERROR: Failed to create venv. Make sure Python is installed.
-    echo Download Python: https://www.python.org/downloads/
-    pause
-    exit /b 1
+REM Proveri da li venv vec postoji da ne bi gubio vreme
+if not exist "%VENV_PATH%\Scripts\activate.bat" (
+    echo Creating virtual environment at %VENV_PATH%...
+    python -m venv %VENV_PATH%
 )
 
-echo Activating...
+echo Activating environment...
 call %VENV_PATH%\Scripts\activate.bat
 
-echo Installing dependencies...
+echo Updating pip and installing dependencies...
+python -m pip install --upgrade pip
 pip install -r "%~dp0requirements.txt"
 
 if errorlevel 1 (
-    echo ERROR: pip install failed
+    echo ERROR: Instalacija paketa nije uspela. Proveri requirements.txt.
     pause
     exit /b 1
 )
@@ -37,6 +33,6 @@ echo ============================================
 echo.
 
 cd /d "%~dp0"
-%VENV_PATH%\Scripts\uvicorn.exe main:app --reload --port 8000
+"%VENV_PATH%\Scripts\uvicorn.exe" main:app --reload --port 8000
 
 pause

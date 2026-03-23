@@ -6,19 +6,26 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import os
 
+# Uvoz svih routera iz tvojih foldera
 from routers import auth, profile, vocab, quiz, writing, grammar, speaking, arena, audio, leaderboard, coach, mistakes
 
 app = FastAPI(title="HanziFlow API", version="1.0.0")
 
+# --- CORS PODEŠAVANJA ---
+# Ovde dozvoljavamo tvom Vercel sajtu da komunicira sa Railway backendom
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", os.getenv("FRONTEND_URL", "*")],
+    allow_origins=[
+        "http://localhost:3000",              # Za lokalni razvoj
+        "https://hanziflowwebb.vercel.app",    # Tvoj glavni Vercel sajt
+        os.getenv("FRONTEND_URL", "*")        # Fleksibilnost za budućnost
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Mount routers
+# --- RUTERS (Putevi za API) ---
 app.include_router(auth.router,        prefix="/auth",        tags=["auth"])
 app.include_router(profile.router,     prefix="/profile",     tags=["profile"])
 app.include_router(vocab.router,       prefix="/vocab",       tags=["vocab"])
@@ -33,4 +40,5 @@ app.include_router(coach.router,       prefix="/coach",       tags=["coach"])
 app.include_router(mistakes.router,    prefix="/mistakes",    tags=["mistakes"])
 
 @app.get("/health")
-def health(): return {"status": "ok", "version": "1.0.0"}
+def health(): 
+    return {"status": "ok", "version": "1.0.0", "message": "HanziFlow API is live!"}
